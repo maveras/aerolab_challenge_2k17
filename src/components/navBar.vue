@@ -7,7 +7,7 @@
 			<li>{{userData.name}}</li>
       <div class="user-coins-container">
     		<li>{{userData.points}}</li>
-        <coin></coin>
+        <coin :rotating="userDataLoading"></coin>
       </div>
 		</ul>
 	</nav>
@@ -21,13 +21,16 @@ export default {
 
   data () {
     return {
-
+      coinRotating: true
     }
   },
   computed: {
   	userData () {
   		return this.$store.getters.userData
-  	}
+  	},
+    userDataLoading () {
+      return this.$store.getters.userDataLoading
+    }
   },
   components: {
     coin

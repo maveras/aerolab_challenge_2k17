@@ -11,7 +11,8 @@ export default new Vuex.Store({
     apiLoaded: false,
     user: {
       logged: false,
-      data: {}
+      data: {},
+      loading: false
     },
     products: []
   },
@@ -22,13 +23,21 @@ export default new Vuex.Store({
     SET_PRODUCTS (state, apiProducts) {
       state.products = apiProducts
       state.apiLoaded = true
+    },
+    SET_LOADING_USER (state) {
+      state.user.loading = true
+    },
+    FINISH_LOADING_USER (state) {
+      state.user.loading = false
     }
   },
   actions: {
     login ({commit}) {
+      commit('SET_LOADING_USER')
       axios.get('https://aerolab-challenge.now.sh/user/me')
       .then( res => {
         commit('SET_USER', res.data)
+        commit('FINISH_LOADING_USER')
       })
       .catch( error => console.log(error))
     },
@@ -52,6 +61,9 @@ export default new Vuex.Store({
     },
     products: state => {
       return state.products
+    },
+    userDataLoading : state => {
+      return state.user.loading
     }
   }
 })

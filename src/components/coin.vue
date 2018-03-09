@@ -1,5 +1,5 @@
 <template>
-    <div class="coin">
+    <div class="coin" :class="{rotate: rotating}">
       <img src="../assets/icons/coin.svg" alt="">
     </div>
 </template>
@@ -11,13 +11,9 @@ export default {
 
   data () {
     return {
-      rotate: false
     }
   },
-  methods: {
-    rotateCoin () {
-    }
-  }
+  props: ["rotating"]
 }
 </script>
 
@@ -25,5 +21,9 @@ export default {
   .coin {
     display: flex;
     align-items: flex-end;
+    transition: all 4s ease;
+  }
+  .rotate {
+    transform: rotateY(500deg)
   }
 </style>
