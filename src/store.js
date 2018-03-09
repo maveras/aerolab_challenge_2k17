@@ -21,6 +21,7 @@ export default new Vuex.Store({
     },
     SET_PRODUCTS (state, apiProducts) {
       state.products = apiProducts
+      state.apiLoaded = true
     }
   },
   actions: {
@@ -45,6 +46,12 @@ export default new Vuex.Store({
     },
     userData: state => {
       return state.user.data
+    },
+    apiLoaded: state => {
+      return state.user.data
+    },
+    products: state => {
+      return state.products
     }
   }
 })

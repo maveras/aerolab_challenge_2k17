@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <h1>skjsdl</h1>
+    <nav-bar></nav-bar>
+    <products></products>
   </div>
 </template>
-
 <script>
+import navBar from './components/navBar.vue'
+import products from './components/products.vue'
 export default {
   name: 'app',
   data () {
@@ -15,6 +17,15 @@ export default {
   created () {
     this.$store.dispatch('login')
     this.$store.dispatch('getProducts')
+  },
+  computed: {
+    apiLoaded () {
+      return this.$store.state.apiLoaded
+    }
+  },
+  components: {
+    navBar,
+    products
   }
 }
 </script>
@@ -24,9 +35,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
 h1, h2 {
@@ -35,7 +44,8 @@ h1, h2 {
 
 ul {
   list-style-type: none;
-  padding: 0;
+  padding: 10px;
+  margin: 0;
 }
 
 li {
