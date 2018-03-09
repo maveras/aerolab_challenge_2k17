@@ -21,9 +21,17 @@ export default {
   .coin {
     display: flex;
     align-items: flex-end;
-    transition: all 4s ease;
+    transition: rotate 1s ease
   }
   .rotate {
-    transform: rotateY(500deg)
+    animation: rotating 0.8s linear infinite;
+  }
+  @keyframes rotating {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
   }
 </style>

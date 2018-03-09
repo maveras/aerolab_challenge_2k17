@@ -6,7 +6,9 @@
 			</li>
 			<li>{{userData.name}}</li>
       <div class="user-coins-container">
-    		<li>{{userData.points}}</li>
+        <transition name="slide-fade">
+          <li>{{userData.points}}</li>
+        </transition>
         <coin :rotating="userDataLoading"></coin>
       </div>
 		</ul>
@@ -21,7 +23,6 @@ export default {
 
   data () {
     return {
-      coinRotating: true
     }
   },
   computed: {
@@ -59,5 +60,17 @@ export default {
   .user-coins-container {
     display: flex;
     align-items: center
+  }
+
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+    transform: translateX(10px);
+    opacity: 0;
   }
 </style>

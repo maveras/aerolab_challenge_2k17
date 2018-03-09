@@ -14,14 +14,17 @@ export default new Vuex.Store({
       data: {},
       loading: false
     },
-    products: []
+    products: {
+      loadingProducts: false,
+      products: []
+    }
   },
   mutations: {
     SET_USER (state, apiData) {
       state.user.data = apiData
     },
     SET_PRODUCTS (state, apiProducts) {
-      state.products = apiProducts
+      state.products.products = apiProducts
       state.apiLoaded = true
     },
     SET_LOADING_USER (state) {
@@ -29,11 +32,18 @@ export default new Vuex.Store({
     },
     FINISH_LOADING_USER (state) {
       state.user.loading = false
+    },
+    LOADING_PRODUCT_START (state) {
+      state.products.loadingProducts = true
+    },
+    LOADING_PRODUCT_FINISHED (state) {
+      state.products.loadingProducts = false
     }
   },
   actions: {
     login ({commit}) {
       commit('SET_LOADING_USER')
+       console.log('entreee')
       axios.get('https://aerolab-challenge.now.sh/user/me')
       .then( res => {
         commit('SET_USER', res.data)
@@ -42,9 +52,11 @@ export default new Vuex.Store({
       .catch( error => console.log(error))
     },
     getProducts ({commit}) {
+      commit('LOADING_PRODUCT_START')
       axios.get('https://aerolab-challenge.now.sh/products')
       .then( res => {
         commit('SET_PRODUCTS', res.data)
+        commit('LOADING_PRODUCT_FINISHED')
       })
       .catch( error => console.log(error))
     }
@@ -60,10 +72,13 @@ export default new Vuex.Store({
       return state.user.data
     },
     products: state => {
-      return state.products
+      return state.products.products
     },
     userDataLoading : state => {
       return state.user.loading
+    },
+    productsLoading : state => {
+      return state.products.productsLoading
     }
   }
 })
