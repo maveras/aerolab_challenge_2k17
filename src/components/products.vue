@@ -13,12 +13,13 @@
                :img="product.img"
                :name="product.name"> </product>
     </div>
-    <div class="">LOADING PRODUCTS......</div>
+    <div v-else >LOADING PRODUCTS...... <coin :rotating="!productsLoading"></coin></div>
   </div>
 </template>
 
 <script>
 import product from './product.vue'
+import coin from './coin.vue'
 export default {
   name: 'products',
   data () {
@@ -36,7 +37,8 @@ export default {
     }
   },
   components: {
-    product
+    product,
+    coin
   }
 }
 </script>
