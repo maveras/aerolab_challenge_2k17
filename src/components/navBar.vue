@@ -5,12 +5,16 @@
 				<img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
 			</li>
 			<li>{{userData.name}}</li>
-			<li>{{userData.points}} coins</li>
+      <div class="user-coins-container">
+    		<li>{{userData.points}}</li>
+        <coin></coin>
+      </div>
 		</ul>
 	</nav>
 </template>
 
 <script>
+import coin from './coin.vue'
 export default {
 
   name: 'navBar',
@@ -24,6 +28,9 @@ export default {
   	userData () {
   		return this.$store.getters.userData
   	}
+  },
+  components: {
+    coin
   }
 }
 </script>
@@ -46,4 +53,8 @@ export default {
 	.navbar__li--logo {
 		align-self: flex-start;
 	}
+  .user-coins-container {
+    display: flex;
+    align-items: center
+  }
 </style>

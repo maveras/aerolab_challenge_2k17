@@ -2,7 +2,10 @@
 	<div class="product">
     <div class="product__img">
       <img :src="img.url" alt="">
-      <div class="product__price">100$$</div>
+      <div class="product__price">
+        <span class="price__detail">{{cost}}</span>
+        <coin class="coin"></coin>
+      </div>
     </div>
     <div class="product__detail">
       <div class="product__name">{{name}}</div>
@@ -12,6 +15,7 @@
 </template>
 
 <script>
+import coin from './coin.vue'
 export default {
 
   name: 'product',
@@ -27,6 +31,9 @@ export default {
     return {
 
     }
+  },
+  components: {
+    coin
   }
 }
 </script>
@@ -47,7 +54,14 @@ export default {
     position: absolute;
     top: 10px;
     right:10px;
-    background-color: red;
+    background-color: #60D9FB;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    padding-left:.4rem;
+    padding-top:2px;
+  }
+  .price__detail {
   }
 
 </style>
