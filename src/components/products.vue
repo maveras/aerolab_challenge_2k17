@@ -5,7 +5,7 @@
         {{title}}
       </div>
     </div>
-    <div class="product-list">
+    <div class="product-list" v-if="!productsLoading">
       <product v-for="product in products"
                :price="product._id"
                :category="product.category"
@@ -13,6 +13,7 @@
                :img="product.img"
                :name="product.name"> </product>
     </div>
+    <div class="">LOADING PRODUCTS......</div>
   </div>
 </template>
 
@@ -29,6 +30,9 @@ export default {
   computed: {
     products () {
       return this.$store.getters.products
+    },
+    productsLoading () {
+      return this.$store.getters.productsLoading
     }
   },
   components: {
