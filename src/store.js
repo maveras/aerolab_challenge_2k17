@@ -44,7 +44,7 @@ export default new Vuex.Store({
       state.products.loadingProducts = false
     },
     REDDEM (state, product) {
-      state.user.data.points =- product.cost
+      state.user.data.points = state.user.data.points - product.cost
     },
     ADD_PRODUCT (state, product) {
       state.user.selectedProducts.push(product)
