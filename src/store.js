@@ -11,7 +11,11 @@ export default new Vuex.Store({
     apiLoaded: false,
     user: {
       logged: false,
-      data: {},
+      data: {
+        points: 0,
+        name: ''
+      },
+      selectedProducts: [],
       loading: false
     },
     products: {
@@ -38,6 +42,12 @@ export default new Vuex.Store({
     },
     LOADING_PRODUCT_FINISHED (state) {
       state.products.loadingProducts = false
+    },
+    REDDEM (state, product) {
+      state.user.data.points =- product.cost
+    },
+    ADD_PRODUCT (state, product) {
+      state.user.selectedProducts.push(product)
     }
   },
   actions: {
@@ -59,6 +69,12 @@ export default new Vuex.Store({
         commit('LOADING_PRODUCT_FINISHED')
       })
       .catch( error => console.log(error))
+    },
+    reddemProduct ({commit}, product) {
+      commit('REDDEM', product)
+    },
+    addProductToCart ({commit}, product) {
+      commit('ADD_PRODUCT', product)
     }
   },
   getters: {
@@ -79,6 +95,9 @@ export default new Vuex.Store({
     },
     productsLoading : state => {
       return state.products.productsLoading
+    },
+    userPoints: state => {
+      return state.user.data.points
     }
   }
 })

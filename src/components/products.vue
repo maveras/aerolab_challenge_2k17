@@ -7,6 +7,7 @@
     </div>
     <div class="product-list" v-if="!productsLoading">
       <product v-for="product in products"
+               :product="product"
                :price="product._id"
                :category="product.category"
                :cost="product.cost"

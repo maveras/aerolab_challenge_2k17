@@ -59,7 +59,12 @@ export default {
 	}
   .user-coins-container {
     display: flex;
-    align-items: center
+    align-items: center;
+    background-color: gray;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    padding-top: 3px;
   }
 
   .slide-fade-enter-active {
