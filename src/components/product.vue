@@ -1,10 +1,10 @@
 <template>
-	<div class="product" @mouseover="showRedeem = true" @mouseleave="showRedeem = false">
+	<div class="product" @mouseover="showRedeem = true && !insufficientFounds" @mouseleave="showRedeem = false">
     <div class="product__reddem" :class="{ 'product__reddem--show' : showRedeem }">
       <span class="product__reddem__price">
         {{cost}}
       </span>
-      <button class="btn">Reedem NOW</button>
+      <button class="btn" @click="reddem(product)">Reedem NOW</button>
     </div>
     <div class="product__img">
       <img :src="img.url" alt="">
@@ -13,11 +13,12 @@
         <coin class="coin"></coin>
       </div>
       <div v-else class="product__price">
-        <span class="price__detail">{{cost}}</span>
-        <coin class="coin"></coin>
+        <template v-if="!showRedeem">
+          <span class="price__detail">{{cost}}</span>
+          <coin class="coin"></coin>
+        </template>
       </div>
     </div>
-    <coin></coin>
     <div class="product__detail">
       <div class="product__name">{{name}}</div>
       <div class="product__category">{{category}} </div>
@@ -97,16 +98,17 @@ export default {
   }
   .product__reddem {
     background-color: rgba(96,217,251, 0.8);
-    height: 326px;
+    height: 290px;
     width: 285px;
     position: absolute;
     top:0;
     left: 0;
     margin: 0;
     padding: 0;
-    transform: translateY(326px);
+    transform: translateY(50px);
     opacity: 0;
     transition: all 0.2s ease;
+    cursor: pointer;
   }
   .product__reddem--show {
     transform: translateY(0px);
