@@ -2,9 +2,19 @@
 	<div class="product" @mouseover="showRedeem = true && !insufficientFounds" @mouseleave="showRedeem = false">
     <div class="product__reddem" :class="{ 'product__reddem--show' : showRedeem }">
       <span class="product__reddem__price">
-        {{cost}}
+        {{userPoints}}
       </span>
-      <button class="btn" @click="reddem(product)">Reedem NOW</button>
+      <span class="product__reddem__price">
+        - {{cost}}
+      </span>
+      <span class="product__reddem__price product__reddem__price--total">
+      {{total}}<coin class="coin-total-price" :rotating="true"></coin>
+
+      </span>
+
+      <div class="">
+        <button class="btn" v-if="!userReddeming" @click="reddem(product)">REDDEM NOW</button>
+      </div>
     </div>
     <div class="product__img">
       <img :src="img.url" alt="">
@@ -22,7 +32,6 @@
     <div class="product__detail">
       <div class="product__name">{{name}}</div>
       <div class="product__category">{{category}} </div>
-      <div class=""><button @click="reddem(product)">buyy</button></div>
     </div>
 	</div>
 </template>
@@ -48,16 +57,34 @@ export default {
   methods: {
     reddem (product) {
       this.$store.dispatch('reddemProduct', product)
-      this.$store.dispatch('addProductToCart', product)
     }
   },
   computed: {
     insufficientFounds () {
-      return this.cost >= this.$store.getters.userPoints
+      return this.cost > this.$store.getters.userPoints
     },
     diffPrice () {
       let diffPrice = this.cost - this.$store.getters.userPoints
       return diffPrice
+    },
+    userPoints () {
+      return this.$store.getters.userPoints
+    },
+    total () {
+      let userPoint = this.userPoints
+      let cost = this.cost
+
+      let total = userPoint - cost
+      return total
+    },
+    userReddeming () {
+      return this.$store.getters.userReddeming
+    }
+
+  },
+  watch: {
+    userReddeming () {
+      
     }
   },
   components: {
@@ -98,7 +125,7 @@ export default {
   }
   .product__reddem {
     background-color: rgba(96,217,251, 0.8);
-    height: 290px;
+    height: 270px;
     width: 285px;
     position: absolute;
     top:0;
@@ -109,16 +136,63 @@ export default {
     opacity: 0;
     transition: all 0.2s ease;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 2px 2px 6px 0 rgba(0,0,0,0.16);
+
   }
   .product__reddem--show {
     transform: translateY(0px);
     opacity: 1;
   }
   .product__reddem__price {
-
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: inline;
+    color: white;
+    text-shadow: 1px 1px 1px grey;
+    position: relative;
+  }
+  .product__reddem__price--absolute {
+    position: absolute;
+    top:10px;
+  }
+  .product__reddem__price--total {
+    border-top: solid 3px white;
+    padding: 6px;
   }
   .btn {
     width: 3rem;
+  }
+  .price__detail {
+    display: inline-block;
+  }
+  .coin {
+    display: inline-block;
+  }
+  .coin-total-price {
+    position: relative;
+    top: 10px;
+    left: 0px;
+  }
+
+  .btn {
+    display: inline;
+    background: #808080;
+    width: auto;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: .6rem;
+    font-size: 1rem;
+    transition: all .2s ease;
+  }
+  .btn:hover {
+    transform: scale(1.1);
   }
 
 </style>

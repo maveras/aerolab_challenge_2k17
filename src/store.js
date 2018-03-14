@@ -16,11 +16,16 @@ export default new Vuex.Store({
         name: ''
       },
       selectedProducts: [],
-      loading: false
+      loading: false,
+      reddeming: false
     },
     products: {
       loadingProducts: false,
       products: []
+    },
+    ui: {
+      discountAnimation: false,
+      discountPrice: 0
     }
   },
   mutations: {
@@ -48,6 +53,21 @@ export default new Vuex.Store({
     },
     ADD_PRODUCT (state, product) {
       state.user.selectedProducts.push(product)
+    },
+    SET_DISCOUNT_PRICE (state, price) {
+      state.ui.discountPrice = price
+    },
+    DISCOUNT_ANIMATION_ON (state) {
+      state.ui.discountAnimation = true
+    },
+    DISCOUNT_ANIMATION_OFF (state) {
+      state.ui.discountAnimation = false
+    },
+    REDDEMING (state) {
+      state.user.reddeming = !state.user.reddeming
+    },
+    SET_POINTS (state, points) {
+      state.user.data.points =+ points
     }
   },
   actions: {
@@ -70,8 +90,21 @@ export default new Vuex.Store({
       })
       .catch( error => console.log(error))
     },
-    reddemProduct ({commit}, product) {
-      commit('REDDEM', product)
+    reddemProduct ({commit, dispatch}, product) {
+      commit('REDDEMING')
+      let reedemProduct = {
+        productId: product._id
+      }
+      axios.post('https://aerolab-challenge.now.sh/redeem', reedemProduct)
+      .then( res => {
+        commit('REDDEM', product)
+        commit('SET_DISCOUNT_PRICE', product.cost)
+        commit('DISCOUNT_ANIMATION_ON')
+        commit('REDDEMING')
+        // dispatch('reddemProduct', product)
+        dispatch('addProductToCart', product)
+      })
+      .catch( error => console.log(error))
     },
     addProductToCart ({commit}, product) {
       commit('ADD_PRODUCT', product)
@@ -96,8 +129,20 @@ export default new Vuex.Store({
     productsLoading : state => {
       return state.products.productsLoading
     },
+    userName: state => {
+      return state.user.data.name
+    },
     userPoints: state => {
       return state.user.data.points
+    },
+    uiDiscountAnimation: state => {
+      return state.ui.discountAnimation
+    },
+    uiDiscountPrice: state => {
+      return state.ui.discountPrice
+    },
+    userReddeming: state => {
+      return state.user.reddeming
     }
   }
 })

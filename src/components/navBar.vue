@@ -1,21 +1,22 @@
 <template>
-	<nav class="navbar">
+	<nav class="navbar" :class="{'navbar--fixed': fixed}">
 		<ul class="navbar__ul">
 			<li class="navbar__li--logo">
 				<img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
 			</li>
 			<li>{{userData.name}}</li>
       <div class="user-coins-container">
-        <transition name="slide-fade">
           <li>{{userData.points}}</li>
-        </transition>
-        <coin :rotating="userDataLoading"></coin>
+          <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
+        <coin :rotating="userDataLoading "></coin>
       </div>
 		</ul>
+    <button @click="addAmount()">add amount</button>
 	</nav>
 </template>
 
 <script>
+import axios from 'axios'
 import coin from './coin.vue'
 export default {
 
@@ -23,6 +24,28 @@ export default {
 
   data () {
     return {
+      animateDiscount: false,
+      fixed: false
+    }
+  },
+  methods: {
+    doDiscountAnimation () {
+      console.log('entrreeeeeeeeee')
+      let _this = this
+      setTimeout (()=> {
+        this.$store.commit('DISCOUNT_ANIMATION_OFF')
+      },1500)
+    },
+    addAmount () {
+      let amountObj = {
+        amount: 1000
+      }
+      axios.post('https://aerolab-challenge.now.sh/user/points', amountObj)
+      .then( res => {
+        console.log(res)
+        this.$store.dispatch('login')
+      })
+
     }
   },
   computed: {
@@ -31,7 +54,20 @@ export default {
   	},
     userDataLoading () {
       return this.$store.getters.userDataLoading
+    },
+    discountAnimation () {
+      return this.$store.getters.uiDiscountAnimation
+    },
+    uiDiscountPrice () {
+      return this.$store.getters.uiDiscountPrice
     }
+  },
+  watch: {
+    discountAnimation (value1, value2) {
+      // doDiscountAnimation ()
+      //this.$store.commit('DISCOUNT_ANIMATION_OFF')
+      this.doDiscountAnimation ()
+    },
   },
   components: {
     coin
@@ -44,6 +80,9 @@ export default {
 		box-shadow: 3px 3px 5px 2px #ccc;
 		margin: 0;
 	}
+  .navbar--fixed {
+    position: fixed;
+  }
 	.navbar__ul {
 		height: 2rem;
 		display: flex;
@@ -65,6 +104,27 @@ export default {
     color: white;
     font-weight: bold;
     padding-top: 3px;
+    position: relative;
+  }
+  .discount {
+    position: absolute;
+    opacity: 0;
+    bottom: 10px;
+    color: red;
+  }
+
+  .animate-discount {
+    animation: discountAnimation 2s ease;
+  }
+
+  @keyframes discountAnimation {
+    from {
+      opacity: 1;
+    }
+    to {
+      bottom: 46px;
+      opacity: 0;
+    }
   }
 
   .slide-fade-enter-active {

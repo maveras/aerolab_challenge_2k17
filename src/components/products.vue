@@ -21,6 +21,7 @@
 <script>
 import product from './product.vue'
 import coin from './coin.vue'
+
 export default {
   name: 'products',
   data () {
