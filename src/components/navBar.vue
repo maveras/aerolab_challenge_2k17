@@ -1,14 +1,18 @@
 <template>
 	<nav class="navbar" :class="{'navbar--fixed': stickNavBar}">
 		<ul class="navbar__ul">
-			<li class="navbar__li--logo">
-				<img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
-			</li>
-			<li>{{userData.name}}</li>
-      <div class="user-coins-container">
-          <li>{{userData.points}}</li>
-          <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
-        <coin :rotating="userDataLoading "></coin>
+      <div class="navbar__left">
+        <li class="navbar__li--logo">
+          <img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
+        </li>
+      </div>
+      <div class="navbar__right">
+        <li>{{userData.name}}</li>
+        <div class="user-coins-container">
+            <li>{{userData.points}}</li>
+            <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
+          <coin :rotating="userDataLoading "></coin>
+        </div>        
       </div>
 		</ul>
     <button @click="addAmount()">add amount</button>
@@ -107,16 +111,20 @@ export default {
 	.navbar__ul {
 		height: 2rem;
 		display: flex;
-		justify-content: flex-end;
-		align-items: center;
+    justify-content: space-between;
+    align-items: center;
 	}
 	.navbar__logo {
 		height: 2rem;
-		margin-right: auto;
 	}
-	.navbar__li--logo {
-		align-self: flex-start;
+	.navbar__left {
+    display: flex;
+    align-items: center;
 	}
+  .navbar__right {
+    display: flex;
+    align-items: center;
+  }
   .user-coins-container {
     display: flex;
     align-items: center;
