@@ -1,5 +1,5 @@
 <template>
-	<nav class="navbar" :class="{'navbar--fixed': fixed}">
+	<nav class="navbar" :class="{'navbar--fixed': stickNavBar}">
 		<ul class="navbar__ul">
 			<li class="navbar__li--logo">
 				<img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
@@ -25,12 +25,11 @@ export default {
   data () {
     return {
       animateDiscount: false,
-      fixed: false
+      stickNavBar: false
     }
   },
   methods: {
     doDiscountAnimation () {
-      console.log('entrreeeeeeeeee')
       let _this = this
       setTimeout (()=> {
         this.$store.commit('DISCOUNT_ANIMATION_OFF')
@@ -46,6 +45,18 @@ export default {
         this.$store.dispatch('login')
       })
 
+    },
+    setScrollBar () {
+      let navbar = document.querySelector('.navbar')
+      let navarSize = navbar.offsetHeight
+      window.addEventListener('scroll', evt => {
+        console.log(window.pageYOffset, navarSize)
+        if (window.pageYOffset > navarSize) {
+          this.stickNavBar = true
+        } else {
+          this.stickNavBar = false
+        }
+      })
     }
   },
   computed: {
@@ -67,7 +78,11 @@ export default {
       // doDiscountAnimation ()
       //this.$store.commit('DISCOUNT_ANIMATION_OFF')
       this.doDiscountAnimation ()
-    },
+    }
+
+  },
+  mounted () {
+    this.setScrollBar()
   },
   components: {
     coin
@@ -79,9 +94,15 @@ export default {
 	.navbar {
 		box-shadow: 3px 3px 5px 2px #ccc;
 		margin: 0;
+    transform: all 3 ease;
 	}
   .navbar--fixed {
     position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background: white;
+    top:0;
+    left: 0;
   }
 	.navbar__ul {
 		height: 2rem;
