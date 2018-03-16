@@ -1,22 +1,28 @@
 <template>
-	<nav class="navbar" :class="{'navbar--fixed': stickNavBar}">
-		<ul class="navbar__ul">
-      <div class="navbar__left">
-        <li class="navbar__li--logo">
-          <img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
-        </li>
+  <div>
+      <nav class="navbar" :class="{'navbar--fixed': stickNavBar}">
+        <ul class="navbar__ul">
+          <div class="navbar__left">
+            <li class="navbar__li--logo">
+              <img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
+            </li>
+          </div>
+          <div class="navbar__right">
+            <li>{{userData.name}}</li>
+            <div class="user-coins-container">
+                <li>{{userData.points}}</li>
+                <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
+              <coin :rotating="userDataLoading "></coin>
+            </div>
+          </div>
+        </ul>
+        <button @click="addAmount()">add amount</button>
+      </nav>
+      <div class="sort-bar">
+        <button class="btn" @click="sortProducts('lth')">low to high</button>
+        <button class="btn" @click="sortProducts('htl')">high to low</button>
       </div>
-      <div class="navbar__right">
-        <li>{{userData.name}}</li>
-        <div class="user-coins-container">
-            <li>{{userData.points}}</li>
-            <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
-          <coin :rotating="userDataLoading "></coin>
-        </div>        
-      </div>
-		</ul>
-    <button @click="addAmount()">add amount</button>
-	</nav>
+  </div>
 </template>
 
 <script>
@@ -33,6 +39,9 @@ export default {
     }
   },
   methods: {
+    sortProducts (type) {
+      this.$store.commit('SORT_BY', type)
+    },
     doDiscountAnimation () {
       let _this = this
       setTimeout (()=> {
@@ -45,7 +54,6 @@ export default {
       }
       axios.post('https://aerolab-challenge.now.sh/user/points', amountObj)
       .then( res => {
-        console.log(res)
         this.$store.dispatch('login')
       })
 
@@ -54,7 +62,6 @@ export default {
       let navbar = document.querySelector('.navbar')
       let navarSize = navbar.offsetHeight
       window.addEventListener('scroll', evt => {
-        console.log(window.pageYOffset, navarSize)
         if (window.pageYOffset > navarSize) {
           this.stickNavBar = true
         } else {

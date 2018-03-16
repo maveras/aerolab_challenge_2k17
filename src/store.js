@@ -29,6 +29,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    SORT_BY (state, type) {
+      if (type === 'lth') {
+        let modProducts = state.products.products.sort(function(a, b){return a.cost - b.cost})
+        state.products.products = modProducts
+      } else {
+        let modProducts = state.products.products.sort(function(a, b){return b.cost - a.cost})
+        state.products.products = modProducts
+      }
+    },
     SET_USER (state, apiData) {
       state.user.data = apiData
     },
