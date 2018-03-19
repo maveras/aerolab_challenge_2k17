@@ -18,10 +18,6 @@
         </ul>
         <button @click="addAmount()">add amount</button>
       </nav>
-      <div class="sort-bar">
-        <button class="btn" @click="sortProducts('lth')">low to high</button>
-        <button class="btn" @click="sortProducts('htl')">high to low</button>
-      </div>
   </div>
 </template>
 
@@ -39,9 +35,6 @@ export default {
     }
   },
   methods: {
-    sortProducts (type) {
-      this.$store.commit('SORT_BY', type)
-    },
     doDiscountAnimation () {
       let _this = this
       setTimeout (()=> {
