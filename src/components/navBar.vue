@@ -13,10 +13,12 @@
                 <li>{{userData.points}}</li>
                 <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
               <coin :rotating="userDataLoading "></coin>
+              <div class="">
+                <button class="btn--trans" @click="addAmount()"><i class="material-icons btn--trans">add</i></button>
+              </div>
             </div>
           </div>
         </ul>
-        <button @click="addAmount()">add amount</button>
       </nav>
   </div>
 </template>
@@ -125,6 +127,9 @@ export default {
     display: flex;
     align-items: center;
   }
+  .navbar__right__add {
+
+  }
   .user-coins-container {
     display: flex;
     align-items: center;
@@ -140,6 +145,28 @@ export default {
     opacity: 0;
     bottom: 10px;
     color: red;
+  }
+
+  .btn {
+    background: #F9CF47;
+    border: 0;
+    font-size: .5rem;
+    margin-right: .2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    color: grey;
+    outline: 0px;
+    font-weight: bold;
+    transition: all .2s ease
+  }
+  .btn--trans {
+    background: transparent;
+    border: none;
+    padding-top: 1px;
+    color: white;
+    cursor: pointer;
+    outline: 0px;
+
   }
 
   .animate-discount {
