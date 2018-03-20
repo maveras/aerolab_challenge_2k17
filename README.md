@@ -1,6 +1,10 @@
 # aerolab2k17
 
-> A Vue.js project
+> Aerolabs challenge 2017
+
+this its my version of challenge
+
+it's server [here](https://dist-yavdewuwab.now.sh/)
 
 ## Build Setup
 
