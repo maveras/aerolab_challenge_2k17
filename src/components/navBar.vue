@@ -4,7 +4,7 @@
         <ul class="navbar__ul">
           <div class="navbar__left">
             <li class="navbar__li--logo">
-              <img class="navbar__logo" src="../assets/aerolab-logo.svg" alt="">
+              <img class="navbar__logo" src="../assets/aerolab-logo.png" alt="">
             </li>
           </div>
           <div class="navbar__right">

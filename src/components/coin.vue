@@ -1,6 +1,6 @@
 <template>
     <div class="coin" :class="{rotate: rotating}">
-      <img src="../assets/icons/coin.svg" alt="">
+      <img src="../assets/icons/coin.png" alt="">
     </div>
 </template>
 
