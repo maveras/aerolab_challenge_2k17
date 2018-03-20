@@ -4,7 +4,7 @@
 
 this its my version of the challenge, made it with vue.js, axios and vuex.
 
-it's server [here](https://dist-yavdewuwab.now.sh/)
+it's located [here](https://dist-yavdewuwab.now.sh/)
 
 ## Build Setup
 
