@@ -2,7 +2,7 @@
 
 > Aerolabs challenge 2017
 
-this its my version of challenge, made it with vue.js, axios and vuex.
+this its my version of the challenge, made it with vue.js, axios and vuex.
 
 it's server [here](https://dist-yavdewuwab.now.sh/)
 
