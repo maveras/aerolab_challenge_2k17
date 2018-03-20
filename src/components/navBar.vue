@@ -12,7 +12,7 @@
             <div class="user-coins-container">
                 <li>{{userData.points}}</li>
                 <li class="discount" :class="{'animate-discount': discountAnimation}">-{{uiDiscountPrice}}</li>
-              <coin :rotating="userDataLoading "></coin>
+              <coin :rotating="userDataLoading || rotate"></coin>
               <div class="">
                 <button class="btn--trans" @click="addAmount()"><i class="material-icons btn--trans">add</i></button>
               </div>
@@ -33,7 +33,8 @@ export default {
   data () {
     return {
       animateDiscount: false,
-      stickNavBar: false
+      stickNavBar: false,
+      rotate: false
     }
   },
   methods: {
@@ -44,12 +45,14 @@ export default {
       },1500)
     },
     addAmount () {
+      this.rotate = true
       let amountObj = {
         amount: 1000
       }
       axios.post('https://aerolab-challenge.now.sh/user/points', amountObj)
       .then( res => {
         this.$store.dispatch('login')
+        this.rotate = false
       })
 
     },
@@ -166,7 +169,6 @@ export default {
     color: white;
     cursor: pointer;
     outline: 0px;
-
   }
 
   .animate-discount {
