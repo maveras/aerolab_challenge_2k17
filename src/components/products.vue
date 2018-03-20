@@ -71,6 +71,10 @@ export default {
     position: absolute;
     bottom: 1rem;
     left: 1rem;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    text-shadow: 1px 1px grey;
   }
   .product-list {
     display: flex;
