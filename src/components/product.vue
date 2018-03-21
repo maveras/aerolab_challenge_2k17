@@ -57,6 +57,7 @@ export default {
   methods: {
     reddem (product) {
       this.$store.dispatch('reddemProduct', product)
+      this.showRedeem = false
     }
   },
   computed: {
@@ -84,7 +85,6 @@ export default {
   },
   watch: {
     userReddeming () {
-      
     }
   },
   components: {
